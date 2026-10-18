@@ -1,0 +1,25 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>DARKZANT</title>
+<style>
+  html, body { margin: 0; height: 100%; background: #000; color: #ff55bb; font: 16px monospace; }
+  #load { position: fixed; inset: 0; display: flex; align-items: center; justify-content: center; letter-spacing: 2px; }
+</style>
+</head>
+<body>
+<div id="load">SUMMONING DARKZANT...</div>
+<script src="wasm_exec.js"></script>
+<script>
+  const go = new Go();
+  WebAssembly.instantiateStreaming(fetch("game.wasm"), go.importObject).then(r => {
+    document.getElementById("load").remove();
+    go.run(r.instance);
+  }).catch(e => {
+    document.getElementById("load").textContent = "FAILED: " + e;
+  });
+</script>
+</body>
+</html>
